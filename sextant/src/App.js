@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './App.css';
 
 function App() {
@@ -28,27 +29,23 @@ function Exhibit(props){
 }
 
 function GetIP(props){
-  let returnText = "...";
+  let [ipAddress, updateIP] = useState('...');
   if(props.ipType == '4'){
     fetch("https://api.ipify.org")
     .then((response) => response.text())
     .then((text) => {
-      console.log(text); 
-      returnText = text;
+      updateIP(text);
     });
   }else if(props.ipType == '6'){
     fetch("https://api64.ipify.org")
     .then((response) => response.text())
     .then((text) => {
-      console.log(text); 
-      returnText = text;
+      updateIP(text);
     });
   }else{
-    console.log("invalid ip type");
+    console.log("invalid IP type");
   }
-  console.log(returnText);
-  return (<p>{returnText}</p>);
-  
+  return (<p>{ipAddress}</p>)
 }
 
 
