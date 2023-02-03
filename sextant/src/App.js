@@ -4,9 +4,8 @@ function App() {
   return (
     <div className="App">
       <Banner/>
-      <Exhibit name='test1'><p>Data 1</p></Exhibit>
-      <Exhibit name='test2'><p>Data 2</p></Exhibit>
-      <Exhibit name='test3'><p>Data 3</p></Exhibit>
+      <Exhibit name='IPv4'><GetIP ipType='4'></GetIP></Exhibit>
+      <Exhibit name='IPv6'><GetIP ipType='6'></GetIP></Exhibit>
     </div>
   );
 }
@@ -26,6 +25,30 @@ function Exhibit(props){
       {props.children}
     </div>
   );
+}
+
+function GetIP(props){
+  let returnText = "...";
+  if(props.ipType == '4'){
+    fetch("https://api.ipify.org")
+    .then((response) => response.text())
+    .then((text) => {
+      console.log(text); 
+      returnText = text;
+    });
+  }else if(props.ipType == '6'){
+    fetch("https://api64.ipify.org")
+    .then((response) => response.text())
+    .then((text) => {
+      console.log(text); 
+      returnText = text;
+    });
+  }else{
+    console.log("invalid ip type");
+  }
+  console.log(returnText);
+  return (<p>{returnText}</p>);
+  
 }
 
 
