@@ -7,6 +7,7 @@ function App() {
       <Banner/>
       <Exhibit name='IPv4'><GetIP ipType='4'></GetIP></Exhibit>
       <Exhibit name='IPv6'><GetIP ipType='6'></GetIP></Exhibit>
+      <Exhibit name='Latency'><GetLatency></GetLatency></Exhibit>
     </div>
   );
 }
@@ -46,6 +47,15 @@ function GetIP(props){
     console.log("invalid IP type");
   }
   return (<p>{ipAddress}</p>)
+}
+
+function GetLatency(){
+  const ws = new WebSocket('ws://localhost:55455');
+  let latency = 0;
+  ws.onmessage = (event) => {
+      latency = Date.now() - event.data;
+  }
+  return (<p>{latency} ms</p>)
 }
 
 
